@@ -27,6 +27,7 @@
         "svelte": "^3.46.4"
     },
     "devDependencies": {
+        "cty": "^1.0.3",
         "husky": "^8.0.3",
         "prettier": "^2.8.1",
         "prettier-plugin-astro": "^0.7.2",
