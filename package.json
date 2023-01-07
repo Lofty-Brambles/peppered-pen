@@ -1,0 +1,37 @@
+{
+    "name": "@peppered/pen",
+    "type": "module",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "lint:src": "prettier -w --plugin-search-dir=. src",
+        "lint:content": "prettier -w --plugin-search-dir=. content",
+        "sweep": "rm -rf dist/"
+    },
+    "dependencies": {
+        "@astrojs/image": "^0.12.1",
+        "@astrojs/prefetch": "^0.1.1",
+        "@astrojs/rss": "^2.0.0",
+        "@astrojs/sitemap": "^1.0.0",
+        "@astrojs/svelte": "^1.0.2",
+        "@markdoc/markdoc": "^0.2.1",
+        "astro": "^1.9.0",
+        "astro-compress": "^1.1.24",
+        "dotenv": "^16.0.3",
+        "sharp": "^0.31.3",
+        "svelte": "^3.46.4"
+    },
+    "devDependencies": {
+        "husky": "^8.0.3",
+        "prettier": "^2.8.1",
+        "prettier-plugin-astro": "^0.7.2",
+        "prettier-plugin-svelte": "^2.9.0",
+        "typescript": "*",
+        "vite": "*"
+    }
+}

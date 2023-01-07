@@ -1,0 +1,34 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# macOS-specific files
+.DS_Store
+
+# stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# typeScript cache
+*.tsbuildinfo
+
+# optional npm cache directory
+.npm
+
+# diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

@@ -1,0 +1,27 @@
+{
+    "tabWidth": 4,
+    "useTabs": true,
+    "endOfLine": "lf",
+    "plugins": [
+        "./node_modules/prettier-plugin-astro",
+        "./node_modules/prettier-plugin-svelte"
+    ],
+    "overrides": [
+        {
+            "files": ["*.json", "*.md", "*.toml", "*.yml"],
+            "options": { "useTabs": false }
+        },
+        {
+            "files": ["**/*.astro"],
+            "options": { "parser": "astro" }
+        },
+        {
+            "files": "**/*.svelte",
+            "options": { "parser": "svelte" }
+        },
+        {
+            "files": "**/*.ts",
+            "options": { "parser": "typescript" }
+        }
+    ]
+}

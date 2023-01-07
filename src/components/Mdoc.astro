@@ -1,0 +1,63 @@
+---
+import { Tag, type RenderableTreeNodes } from "@markdoc/markdoc";
+import type { SvelteComponent } from "svelte";
+
+interface Props {
+	content: Content;
+	components?: CustomComponents;
+}
+
+const { content, components = {} } = Astro.props;
+
+if (
+	!Array.isArray(content) &&
+	Tag.isTag(content) &&
+	typeof content.name === "string" &&
+	/[A-Z]/.test(content.name.charAt(0)) &&
+	!components[content.name]
+)
+	throw new Error(
+		`${content.name} seems like a component, but no renderer was provided.`
+	);
+
+const Element = components[(content as Tag<string, Record<string, any>>).name];
+
+type Content = RenderableTreeNodes;
+type CustomComponents = Record<string, typeof SvelteComponent | unknown>;
+
+const nullishOrPrimitiveCheck = (node: RenderableTreeNodes) =>
+	node === null || typeof node !== "object";
+
+const escape = (text: string | number) => {
+	const META_TEST_REGEX = /[<>"&]/;
+	const META_CATCH_REGEX = /[<>"&]/g;
+	const REPLACEMENTS = new Map<string, string>([
+		["&", "&amp;"],
+		["<", "&lt;"],
+		[">", "&gt;"],
+		['"', "&quot;"],
+	]);
+
+	return META_TEST_REGEX.test(`${text}`)
+		? `${text}`.replace(META_CATCH_REGEX, (ch) => REPLACEMENTS.get(ch)!)
+		: `${text}`;
+};
+---
+
+{
+	Array.isArray(content) ? (
+		content.map((e) => <Astro.self content={e} components={components} />)
+	) : typeof content === "string" || typeof content === "number" ? (
+		<Fragment set:html={escape(content)} />
+	) : nullishOrPrimitiveCheck(content) || !Tag.isTag(content) ? (
+		<Fragment set:html={null} />
+	) : Array.isArray(content.children) ? (
+		<Element {content.attributes}>
+			{content.children.map((e) => (
+				<Astro.self content={e} components={components} />
+			))}
+		</Element>
+	) : (
+		<Element {content.attributes} />
+	)
+}
