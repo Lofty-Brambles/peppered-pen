@@ -11,6 +11,8 @@ specifiers:
   astro-compress: ^1.1.24
   cty: ^1.0.3
   dotenv: ^16.0.3
+  fast-glob: ^3.2.12
+  gray-matter: ^4.0.3
   husky: ^8.0.3
   prettier: ^2.8.1
   prettier-plugin-astro: ^0.7.2
@@ -19,6 +21,7 @@ specifiers:
   svelte: ^3.46.4
   typescript: '*'
   vite: '*'
+  zod: ^3.20.2
 
 dependencies:
   '@astrojs/image': 0.12.1_sharp@0.31.3
@@ -30,8 +33,11 @@ dependencies:
   astro: 1.9.1
   astro-compress: 1.1.24
   dotenv: 16.0.3
+  fast-glob: 3.2.12
+  gray-matter: 4.0.3
   sharp: 0.31.3
   svelte: 3.55.0
+  zod: 3.20.2
 
 devDependencies:
   cty: 1.0.3

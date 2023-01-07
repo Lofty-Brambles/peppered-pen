@@ -2,7 +2,7 @@ import "dotenv/config";
 
 interface getParams {
 	key: string;
-	fall: string;
+	fall: string | true;
 	imp?: boolean;
 }
 
@@ -20,18 +20,26 @@ const errorHandler = ({ key, fall, imp = false }: getParams): void => {
 class EnvVars {
 	private _getVars({ key, fall, imp = false }: getParams): string {
 		const variable = process.env[key];
+		if (fall === true) return "UNDEFINED_IN_DEV";
 		errorHandler({ key, fall, imp });
 		return variable ?? fall;
 	}
 
 	public _port: string;
 	public url: string;
+	public content: string;
+	public mdocPlugs: string;
 	public title: string;
 	public author: string;
 
 	constructor() {
 		this._port = this._getVars({ key: "PORT", fall: "3000" });
-		this.url = this._getVars({ key: "VERCEL_URL", fall: "" });
+		this.url = this._getVars({ key: "VERCEL_URL", fall: true, imp: true });
+		this.content = this._getVars({ key: "CONTENT_DIR", fall: "content" });
+		this.mdocPlugs = this._getVars({
+			key: "MDOC_PLUGINS_DIR",
+			fall: "src/mdoc-plugin/plugins",
+		});
 		this.title = this._getVars({ key: "TITLE", fall: "🌶 | Peppered Pen!" });
 		this.author = this._getVars({ key: "AUTHOR", fall: "Lofty Brambles" });
 	}

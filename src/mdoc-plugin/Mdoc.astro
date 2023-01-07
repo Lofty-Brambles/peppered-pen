@@ -3,8 +3,8 @@ import { Tag, type RenderableTreeNodes } from "@markdoc/markdoc";
 import type { SvelteComponent } from "svelte";
 
 interface Props {
-	content: Content;
-	components?: CustomComponents;
+	content: RenderableTreeNodes;
+	components?: Record<string, typeof SvelteComponent>;
 }
 
 const { content, components = {} } = Astro.props;
@@ -21,9 +21,6 @@ if (
 	);
 
 const Element = components[(content as Tag<string, Record<string, any>>).name];
-
-type Content = RenderableTreeNodes;
-type CustomComponents = Record<string, typeof SvelteComponent | unknown>;
 
 const nullishOrPrimitiveCheck = (node: RenderableTreeNodes) =>
 	node === null || typeof node !== "object";
@@ -51,13 +48,13 @@ const escape = (text: string | number) => {
 		<Fragment set:html={escape(content)} />
 	) : nullishOrPrimitiveCheck(content) || !Tag.isTag(content) ? (
 		<Fragment set:html={null} />
-	) : Array.isArray(content.children) ? (
-		<Element {content.attributes}>
-			{content.children.map((e) => (
-				<Astro.self content={e} components={components} />
-			))}
-		</Element>
+	) : typeof Element === "undefined" ? (
+		<content.name {...content.attributes}>
+			{Array.isArray(content.children) ? content.children : ""}
+		</content.name>
 	) : (
-		<Element {content.attributes} />
+		<svelte:element this={Element} {...content.attributes} client:visible>
+			{Array.isArray(content.children) ? content.children : ""}
+		</svelte:element>
 	)
 }
