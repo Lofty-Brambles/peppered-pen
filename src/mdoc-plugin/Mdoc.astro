@@ -20,7 +20,7 @@ if (
 		`${content.name} seems like a component, but no renderer was provided.`
 	);
 
-// const Element = components[(content as Tag<string, Record<string, any>>).name];
+const Element = components[(content as Tag<string, Record<string, any>>).name];
 
 const nullishOrPrimitiveCheck = (node: RenderableTreeNodes) =>
 	node === null || typeof node !== "object";
@@ -48,9 +48,23 @@ const escape = (text: string | number) => {
 		<Fragment set:html={escape(content)} />
 	) : nullishOrPrimitiveCheck(content) || !Tag.isTag(content) ? (
 		<Fragment set:html={null} />
-	) : (
+	) : typeof Element === "undefined" ? (
 		<content.name {...content.attributes}>
-			{Array.isArray(content.children) ? content.children : ""}
+			{Array.isArray(content.children) && (
+				<Astro.self
+					content={content.children}
+					components={components}
+				/>
+			)}
 		</content.name>
+	) : (
+		<svelte:element this={Element} {...content.attributes} client:visible>
+			{Array.isArray(content.children) && (
+				<Astro.self
+					content={content.children}
+					components={components}
+				/>
+			)}
+		</svelte:element>
 	)
 }

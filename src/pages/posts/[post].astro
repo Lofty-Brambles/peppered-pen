@@ -11,7 +11,9 @@ export async function getStaticPaths() {
 
 	return posts.map((post, i) => ({
 		params: {
-			id: post.id,
+			post: post.frontmatter.title,
+		},
+		props: {
 			post: post.renderableTree,
 			frontmatter: post.frontmatter,
 			pagination: {
@@ -22,7 +24,7 @@ export async function getStaticPaths() {
 	}));
 }
 
-const { post } = Astro.params;
+const { post } = Astro.props;
 ---
 
 <Mdoc content={post!} />

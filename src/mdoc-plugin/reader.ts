@@ -20,14 +20,13 @@ type Read = {
 };
 
 export async function read<T extends z.ZodTypeAny>({ dir, type }: Read) {
-	const dirPath = posix.join(process.cwd(), dir);
-	const paths = await glob(`${dirPath}/**/*.{md,mdoc}`);``
+	const paths = await glob(`${posix.resolve(dir)}/**/*.{md,mdoc}`);
 
 	let schema: T;
-	const schematics = Object.entries(import.meta.glob<T>("./*.config.ts"));
+	const schematics = Object.entries(import.meta.glob<{ schema: T }>("./*.config.ts"));
 	for (const schematicFile of schematics) {
 		if (!schematicFile[0].includes(type)) continue;
-		schema = await schematicFile[1]();
+		schema = (await schematicFile[1]()).schema;
 		break;
 	}
 
@@ -97,6 +96,7 @@ async function validateFrontmatter<T extends z.ZodTypeAny>({
 		return schema.parse(data) as z.infer<T>;
 	} catch (e) {
 		throw new Error(`There was an issue in parsing frontmatter.
-The frontmatter of the following file doesn't match the schema: ${path}`);
+The frontmatter of the following file doesn't match the schema: ${path}
+The error is: ${e}`);
 	}
 }

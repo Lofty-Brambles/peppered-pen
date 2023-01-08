@@ -1,0 +1,9 @@
+---
+import { Debug } from "astro/components";
+import { CONSTANTS } from "@/utilities/env";
+import { read } from "@/mdoc-plugin/reader";
+
+const allPosts = await read({ dir: CONSTANTS.content, type: "post" });
+---
+
+<Debug {allPosts} />
