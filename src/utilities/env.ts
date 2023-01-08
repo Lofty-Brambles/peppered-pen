@@ -28,7 +28,6 @@ class EnvVars {
 	public _port: string;
 	public url: string;
 	public content: string;
-	public mdocPlugs: string;
 	public title: string;
 	public author: string;
 
@@ -36,10 +35,6 @@ class EnvVars {
 		this._port = this._getVars({ key: "PORT", fall: "3000" });
 		this.url = this._getVars({ key: "VERCEL_URL", fall: true, imp: true });
 		this.content = this._getVars({ key: "CONTENT_DIR", fall: "content" });
-		this.mdocPlugs = this._getVars({
-			key: "MDOC_PLUGINS_DIR",
-			fall: "src/mdoc-plugin/plugins",
-		});
 		this.title = this._getVars({ key: "TITLE", fall: "🌶 | Peppered Pen!" });
 		this.author = this._getVars({ key: "AUTHOR", fall: "Lofty Brambles" });
 	}

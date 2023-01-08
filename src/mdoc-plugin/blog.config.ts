@@ -29,5 +29,5 @@ export const schema = z.object({
 			invalid_type_error: "The post picture alt must be a string",
 		}),
 	}),
-	default: z.boolean().default(false),
+	draft: z.boolean().default(false),
 });

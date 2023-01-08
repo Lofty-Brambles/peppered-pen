@@ -8,17 +8,29 @@ import {
 import matter from "gray-matter";
 import glob from "fast-glob";
 import type { z } from "zod";
-import { CONSTANTS } from "@/utilities/env";
 
-import { basename, extname, join } from "path";
-import { readFile, readdir } from "node:fs/promises";
+import { basename, extname, posix } from "path";
+import { readFile } from "node:fs/promises";
 
 export type Plugin = (ast: Node) => Node | Promise<Node>;
 
-export async function read({ dir }: { dir: string }) {
-	const dirPath = join(process.cwd(), dir);
-	const paths = await glob(`${dirPath}/**/*.{md,mdoc}`);
-	const { schema } = await import(join(dirPath, "config.ts"));
+type Read = {
+	dir: string;
+	type: string;
+};
+
+export async function read<T extends z.ZodTypeAny>({ dir, type }: Read) {
+	const dirPath = posix.join(process.cwd(), dir);
+	const paths = await glob(`${dirPath}/**/*.{md,mdoc}`);``
+
+	let schema: T;
+	const schematics = Object.entries(import.meta.glob<T>("./*.config.ts"));
+	for (const schematicFile of schematics) {
+		if (!schematicFile[0].includes(type)) continue;
+		schema = await schematicFile[1]();
+		break;
+	}
+
 	return Promise.all(paths.map((path) => fetch({ path, schema })));
 }
 
@@ -40,18 +52,9 @@ async function fetch<T extends z.ZodTypeAny>({ path, schema }: Fetch<T>) {
 }
 
 async function getPlugins() {
-	const pluginsDir = join(process.cwd(), CONSTANTS.mdocPlugs);
-	const files = await readdir(pluginsDir);
-	const allPlugins = files
-		.filter((p) => /.[tj]s$/.test(p))
-		.map((p) => join(pluginsDir, p));
-
+	const plugins = import.meta.glob<Plugin>("./*.plugin.ts");
 	return Promise.all(
-		allPlugins.map(async (p) => {
-			const { default: main } = await import(p);
-			return async (ast: Node) =>
-				(await main(ast)) as Node | Promise<Node>;
-		})
+		Object.values(plugins).map(async (plug) => await plug())
 	);
 }
 

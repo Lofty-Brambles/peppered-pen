@@ -4,7 +4,7 @@ import { read } from "@/mdoc-plugin/reader";
 import { CONSTANTS } from "@/utilities/env";
 
 export async function getStaticPaths() {
-	const allPosts = await read({ dir: CONSTANTS.content });
+	const allPosts = await read({ dir: CONSTANTS.content, type: "post" });
 	const posts = allPosts.filter(
 		({ frontmatter }) => frontmatter.draft !== true
 	);
