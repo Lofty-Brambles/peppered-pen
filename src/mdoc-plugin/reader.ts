@@ -15,14 +15,10 @@ import { readFile, readdir } from "node:fs/promises";
 
 export type Plugin = (ast: Node) => Node | Promise<Node>;
 
-type Read<T> = {
-	dir: string;
-	schema: T;
-};
-
-export async function read<T extends z.ZodTypeAny>({ dir, schema }: Read<T>) {
+export async function read({ dir }: { dir: string }) {
 	const dirPath = join(process.cwd(), dir);
-	const paths = await glob(`${dirPath}/*.{md,mdoc}`);
+	const paths = await glob(`${dirPath}/**/*.{md,mdoc}`);
+	const { schema } = await import(join(dirPath, "config.ts"));
 	return Promise.all(paths.map((path) => fetch({ path, schema })));
 }
 
@@ -36,11 +32,11 @@ async function fetch<T extends z.ZodTypeAny>({ path, schema }: Fetch<T>) {
 	const { content, data } = matter(rawContent);
 
 	const plugins = await getPlugins();
-	const renderableTree = formRenderableTree({ content, plugins });
-	const frontmatter = validateFrontmatter<T>({ data, path, schema });
+	const renderableTree = await formRenderableTree({ content, plugins });
+	const frontmatter = await validateFrontmatter<T>({ data, path, schema });
 
-	const slug = basename(path, extname(path));
-	return { slug, renderableTree, frontmatter };
+	const id = basename(path, extname(path));
+	return { id, renderableTree, frontmatter };
 }
 
 async function getPlugins() {
