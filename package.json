@@ -10,7 +10,7 @@
         "preview": "astro preview",
         "astro": "astro",
         "lint:src": "prettier -w --plugin-search-dir=. src",
-        "lint:content": "prettier -w --plugin-search-dir=. content",
+        "lint": "prettier -w --plugin-search-dir=. .",
         "sweep": "rm -rf dist/"
     },
     "dependencies": {
