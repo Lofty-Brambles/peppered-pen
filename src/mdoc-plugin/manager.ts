@@ -44,20 +44,25 @@ export const get = async <T extends z.ZodTypeAny>(props: Fetcher<T>) => {
 	const file = await safeReadFile(props.path);
 	const { content, data } = matter(file);
 
+	const fileNameWithExtension = props.path.split("/").pop();
+	if (fileNameWithExtension === undefined)
+		throw new Error(`Bad File name: ${props.path}`);
+	const fileName = fileNameWithExtension.replace(/\.[^.]*$/, "");
+
 	const ast = parse(content);
 	await usePlugins(ast);
 	const meta = validateData({ data, schema: props.schema, path: props.path });
 
-	return { tree: transform(ast), meta };
+	return { slug: fileName, tree: transform(ast), meta };
 };
 
 export const getSchema = async <T extends z.ZodTypeAny>(id: string) => {
-	const allSchemes = import.meta.glob<{ schema: T }>("./*.config.ts");
+	const allSchemes = import.meta.glob<{ schema: T }>("../../**/*.ts");
 
 	let schema = undefined;
 	asyncForEach(Object.entries(allSchemes), async ([name, getSchema]) => {
-		if (name === id) schema = (await getSchema()).schema;
+		if (name.includes(id)) schema = (await getSchema()).schema;
 	});
 
-	return schema as T | undefined;
+	return allSchemes;
 };

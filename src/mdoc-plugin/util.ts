@@ -25,10 +25,10 @@ The error is: ${JSON.stringify(error, undefined, 2)}
 	`);
 };
 
-export const yeetNoSchemaFoundError = (name: string) => {
+export const yeetNoSchemaFoundError = (name: unknown) => {
 	throw new Error(`
 There was an issue with the schema mentioned.
-The schema with the name ${name} was not found.
+The schema with the name ${JSON.stringify(name, undefined, 2)} was not found.
 	`);
 };
 
