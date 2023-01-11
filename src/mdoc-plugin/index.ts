@@ -1,22 +1,18 @@
 import type { z } from "zod";
 import glob from "fast-glob";
 
-import { get, getSchema } from "./manager";
-import { yeetNoSchemaFoundError } from "./util";
+import { get } from "./manager";
 import Markdoc from "./components/Markdoc.astro";
 
-const readFile = async <T extends z.ZodTypeAny>(path: string, id: string) => {
-	const schema = await getSchema(id);
-	yeetNoSchemaFoundError(schema);
-	// return await get<T>({ path, schema: schema! });
+const readFile = async <T extends z.ZodTypeAny>(path: string, schema: T) => {
+	return await get({ path, schema });
 };
 
-const readDir = async <T extends z.ZodTypeAny>(path: string, id: string) => {
-	const schema = await getSchema(id);
-	if (schema === undefined) yeetNoSchemaFoundError(id);
-
+const readDir = async <T extends z.ZodTypeAny>(path: string, schema: T) => {
 	const allPaths = await glob(`${path}/**/*.{md,mdoc}`);
-	return Promise.all(allPaths.map((p) => get({ path: p, schema: schema! })));
+	return Promise.all(
+		allPaths.map((p) => get<typeof schema>({ path: p, schema }))
+	);
 };
 
 export { Markdoc, readFile, readDir };

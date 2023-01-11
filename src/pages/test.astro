@@ -1,8 +1,8 @@
 ---
-import { Debug } from "astro/components";
-import { readFile } from "@/mdoc-plugin";
+import { Markdoc, readDir } from "@/mdoc-plugin";
+import { schema } from "$frontmatter";
 
-const allPosts = await readFile("content/test.mdoc", "post");
+const allPosts = await readDir("content", schema);
 ---
 
-<Debug {allPosts} />
+<Markdoc content={allPosts[0]?.tree!} />

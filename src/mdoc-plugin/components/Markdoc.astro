@@ -3,7 +3,7 @@ import type { SvelteComponent } from "svelte";
 import { Tag, type RenderableTreeNodes } from "@markdoc/markdoc";
 import Snippet from "./Snippet.svelte";
 
-interface Props {
+export interface Props {
 	content: RenderableTreeNodes;
 	components?: Record<string, typeof SvelteComponent>;
 }

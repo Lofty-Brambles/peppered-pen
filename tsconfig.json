@@ -4,7 +4,8 @@
         "types": ["@astrojs/image/client"],
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "$frontmatter": ["content/frontmatter.ts"]
         }
     }
 }

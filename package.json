@@ -24,6 +24,7 @@
         "astro-compress": "^1.1.24",
         "dotenv": "^16.0.3",
         "fast-glob": "^3.2.12",
+        "github-slugger": "^2.0.0",
         "gray-matter": "^4.0.3",
         "sharp": "^0.31.3",
         "svelte": "^3.46.4",

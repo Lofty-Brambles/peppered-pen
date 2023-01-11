@@ -1,9 +1,10 @@
 ---
 // import { Markdoc, readDir } from "@/mdoc-plugin";
 // import { CONSTANTS } from "@/utilities/env";
+// import type { RenderableTreeNodes } from "@markdoc/markdoc";
 
 // export async function getStaticPaths() {
-// 	const allPosts = await readDir(CONSTANTS.content, "post");
+// 	const allPosts = await readDir(CONSTANTS.content);
 // 	const posts = allPosts.filter(({ meta }) => meta.draft !== true);
 
 // 	return posts.map((post, i) => ({
@@ -19,7 +20,18 @@
 // 	}));
 // }
 
+// type ReadReturnType = Awaited<ReturnType<typeof readDir>>[number];
+
+// export interface Props {
+// 	post: RenderableTreeNodes;
+// 	frontmatter: Pick<ReadReturnType, "meta">;
+// 	pagination: {
+// 		previous: ReadReturnType | undefined;
+// 		next: ReadReturnType | undefined;
+// 	};
+// }
+
 // const { post } = Astro.props;
 ---
-<!-- 
-<Markdoc content={post} /> -->
+
+<!-- <Markdoc content={post} /> -->

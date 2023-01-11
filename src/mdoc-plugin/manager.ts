@@ -1,32 +1,33 @@
-import type { z } from "zod";
-import { Node, parse, transform } from "@markdoc/markdoc";
-
 import matter from "gray-matter";
-import { validate } from "@markdoc/markdoc";
+import { parse, transform, validate } from "@markdoc/markdoc";
+import { readFile } from "node:fs/promises";
+import type { z } from "zod";
+import { config, rummageTree } from "./config";
 
-import {
-	asyncForEach,
-	yeetBadASTError,
-	yeetBadFrontmatterError,
-	safeReadFile,
-} from "./util";
-
-export type Plugin = (ast: Node) => Node | Promise<Node>;
-
-const getPlugins = () => {
-	const plugins = import.meta.glob<Plugin>("./*.plugin.ts");
-	return Promise.all(
-		Object.values(plugins).map(async (plug) => await plug())
-	);
+const safeReadFile = async (path: string) => {
+	try {
+		return await readFile(path, "utf-8");
+	} catch (e) {
+		throw new Error(`
+There was an issue with the file path mentioned.
+No file was found at: ${path}
+	`);
+	}
 };
 
-const usePlugins = async (ast: Node) => {
-	const plugins = await getPlugins();
-	asyncForEach(plugins, async (plugin) => {
-		ast = await plugin(ast);
-		const errors = validate(ast);
-		if (errors.length) yeetBadASTError(plugin.name, errors);
-	});
+const usePlugins = async (content: string) => {
+	const ast = parse(content);
+
+	const errors = validate(ast, config);
+	if (errors.length)
+		throw new Error(`
+The AST tree is invalid.
+Please check the config.
+Error: ${JSON.stringify(errors, undefined, 2)}
+	`);
+
+	const transformedTree = transform(ast, config);
+	return await rummageTree(transformedTree);
 };
 
 type Validator<T> = { data: Record<string, any>; schema: T; path: string };
@@ -34,8 +35,11 @@ type Validator<T> = { data: Record<string, any>; schema: T; path: string };
 const validateData = <T extends z.ZodTypeAny>(props: Validator<T>) => {
 	const result = props.schema.safeParse(props.data);
 	if (result.success) return result.data as z.infer<T>;
-	yeetBadFrontmatterError(props.path, result.error);
-	return undefined;
+	throw new Error(`
+There was an issue in parsing frontmatter.
+The frontmatter of the following file doesn't match the schema: ${props.path}
+The error is: ${JSON.stringify(result.error, undefined, 2)}
+	`);
 };
 
 type Fetcher<T> = { path: string; schema: T };
@@ -49,20 +53,8 @@ export const get = async <T extends z.ZodTypeAny>(props: Fetcher<T>) => {
 		throw new Error(`Bad File name: ${props.path}`);
 	const fileName = fileNameWithExtension.replace(/\.[^.]*$/, "");
 
-	const ast = parse(content);
-	await usePlugins(ast);
+	const { tree, ...properties } = await usePlugins(content);
 	const meta = validateData({ data, schema: props.schema, path: props.path });
 
-	return { slug: fileName, tree: transform(ast), meta };
-};
-
-export const getSchema = async <T extends z.ZodTypeAny>(id: string) => {
-	const allSchemes = import.meta.glob<{ schema: T }>("../../**/*.ts");
-
-	let schema = undefined;
-	asyncForEach(Object.entries(allSchemes), async ([name, getSchema]) => {
-		if (name.includes(id)) schema = (await getSchema()).schema;
-	});
-
-	return allSchemes;
+	return { slug: fileName, tree, meta, properties };
 };
