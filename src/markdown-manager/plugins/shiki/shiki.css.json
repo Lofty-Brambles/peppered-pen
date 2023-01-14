@@ -1,0 +1,32 @@
+{
+    "replacementMap": {
+        "#000001": "var(--s-foreground)",
+        "#000002": "var(--s-background)",
+        "#000003": "var(--s-highlight-bg)",
+        "#000004": "var(--s-editor-line)",
+        "#000005": "var(--s-indent-bg)",
+        "#000006": "var(--s-indent-bg-active)",
+        "#000007": "var(--s-whitespace)",
+        "#000008": "var(--s-highlight-border)",
+        "#000009": "var(--s-bracket-bg)",
+        "#000010": "var(--s-bracket-border)",
+        "#000011": "var(--s-bracket-fg1)",
+        "#000012": "var(--s-bracket-fg2)",
+        "#000013": "var(--s-bracket-fg3)",
+        "#000014": "var(--s-bracket-fg4)",
+        "#000015": "var(--s-bracket-fg5)",
+        "#000016": "var(--s-comment)",
+        "#000017": "var(--s-constant)",
+        "#000018": "var(--s-entity)",
+        "#000019": "var(--s-export)",
+        "#000020": "var(--s-params)",
+        "#000021": "var(--s-json-props)",
+        "#000022": "var(--s-string)",
+        "#000023": "var(--s-invalid)",
+        "#000024": "var(--s-carriage)",
+        "#000025": "var(--s-deleted)",
+        "#000026": "var(--s-inserted)",
+        "#000027": "var(--s-changed)",
+        "#000028": "var(--s-ignored)"
+    }
+}
