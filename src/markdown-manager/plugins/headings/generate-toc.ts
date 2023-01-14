@@ -63,6 +63,7 @@ export class HeaderManager {
 
 	private static _formatHeading(tag: Tag, content: string, slug: string) {
 		const SVG_DIMENSIONS = 24;
+		tag.attributes["id"] = slug;
 
 		return new Tag("div", { tabindex: -1, class: "heading-wrapper" }, [
 			tag,

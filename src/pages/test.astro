@@ -1,8 +1,9 @@
 ---
-import { Markdoc, readDir } from "@/mdoc-plugin";
+import { Markdoc, readDir } from "@/markdown-manager";
+import Codeblock from "@/markdown-manager/components/custom/Codeblock.svelte";
 import { schema } from "$frontmatter";
 
 const allPosts = await readDir("content", schema);
 ---
 
-<Markdoc content={allPosts[0]?.tree!} />
+<Markdoc content={allPosts[0]?.tree!} components={{ BlockOCode: Codeblock }} />
