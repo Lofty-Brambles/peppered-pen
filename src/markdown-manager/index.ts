@@ -2,7 +2,7 @@ import type { z } from "zod";
 import glob from "fast-glob";
 
 import { get } from "./manager";
-import Markdoc from "./components/Markdoc.astro";
+import Markdoc, { Component } from "./components/Markdoc.astro";
 
 const readFile = async <T extends z.ZodTypeAny>(path: string, schema: T) => {
 	return await get({ path, schema });
@@ -15,4 +15,6 @@ const readDir = async <T extends z.ZodTypeAny>(path: string, schema: T) => {
 	);
 };
 
-export { Markdoc, readFile, readDir };
+const defaultComponents = new Map<string, Component>();
+
+export { Markdoc, readFile, readDir, defaultComponents };

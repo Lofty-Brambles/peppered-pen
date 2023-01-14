@@ -1,7 +1,7 @@
+import type { z } from "zod";
 import matter from "gray-matter";
 import { parse, transform, validate } from "@markdoc/markdoc";
 import { readFile } from "node:fs/promises";
-import type { z } from "zod";
 import { config, rummageTree } from "./config";
 
 const safeReadFile = async (path: string) => {
