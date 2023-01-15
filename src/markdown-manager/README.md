@@ -23,16 +23,32 @@
 │   └───custom
 │       └───the listed custom components
 │
-│           Codeblock.svelte
+│           Code.astro
+│           InlineCode.astro
 │
 └───plugins
-    └───Headings
-            downlevel-header.ts
-			└───restricts and downgrades the header levels
+    ├───code-snippets
+    │       generate-marker.ts
+    │       └───ships a new marker with the default themes for shiki
+    │
+    │       handle-patterns.ts
+    │       └───patter parsing and validation for codeblock functions
+    │
+    │       index.ts
+    │
+    ├───headings
+    │       generate-toc.ts
+    │       └───iterative navigation of the tree to generate a table of contents
+    │
+    │       handle-level.ts
+    │       └───restricts and downgrades the header levels
+    │
+    │       index.ts
+    │
+    └───shiki
+        └───the shiki themes
 
-            generate-toc.ts
-			└───iterative navigation of the tree to generate a table of contents
-
-            index.ts
+            shiki.css.json
+            theme.json
 
 ```
