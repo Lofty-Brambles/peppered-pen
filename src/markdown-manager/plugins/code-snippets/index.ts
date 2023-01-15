@@ -2,7 +2,7 @@ import type { Schema } from "@markdoc/markdoc";
 import { CodelinePattern } from "./handle-patterns";
 
 export const code: Schema = {
-	render: "code",
+	render: "code-astro",
 	selfClosing: false,
 	attributes: {
 		title: { type: String, render: false, required: true },
@@ -13,3 +13,6 @@ export const code: Schema = {
 		process: { type: Boolean, default: false, render: false },
 	},
 };
+
+export * from "./generate-marker";
+export * from "./handle-patterns";

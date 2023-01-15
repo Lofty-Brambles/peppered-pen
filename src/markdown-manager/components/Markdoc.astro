@@ -23,15 +23,6 @@ if (
 The component must satisfy the convention:- { "name-(astro|svelte)": Component }`
 	);
 
-// const getMarker = async () => {
-// 	const theme = await loadTheme("../../../../../src/shiki/theme.json");
-// 	const highlighter = await getHighlighter({ theme });
-// 	highlighter.setColorReplacements(shikiConfig.replacementMap);
-// 	return highlighter;
-// };
-
-// const marker = await getMarker();
-
 const customComponent = components.get((content as Tag).name);
 
 const nullishOrPrimitiveCheck = (node: RenderableTreeNodes) =>
