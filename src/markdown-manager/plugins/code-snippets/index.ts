@@ -14,5 +14,4 @@ export const code: Schema = {
 	},
 };
 
-export * from "./generate-marker";
 export * from "./handle-patterns";

@@ -5,6 +5,7 @@ import { get } from "./manager";
 import Markdoc, { Component } from "./components/Markdoc.astro";
 
 import Code from "./components/custom/Code.astro";
+import InlineCode from "./components/custom/InlineCode.astro";
 
 const readFile = async <T extends z.ZodTypeAny>(path: string, schema: T) => {
 	return await get({ path, schema });
@@ -17,6 +18,9 @@ const readDir = async <T extends z.ZodTypeAny>(path: string, schema: T) => {
 	);
 };
 
-const defaultComponents = new Map<string, Component>([["code-astro", Code]]);
+const defaultComponents = new Map<string, Component>([
+	["code-astro", Code],
+	["inline-code-astro", InlineCode],
+]);
 
 export { Markdoc, readFile, readDir, defaultComponents };
