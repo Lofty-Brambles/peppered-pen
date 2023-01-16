@@ -14,14 +14,18 @@ export const config: Config = {
 			transform: headingTransform,
 		},
 		code: {
-			transform: disableTransform(
-				"This is disabled, please use the {% inline-code %} tag instead."
-			),
+			children: ["inline"],
+			attributes: {
+				content: { type: String, render: false, required: true },
+			},
+			transform: codeTransform,
 		},
 		fence: {
-			transform: disableTransform(
-				"This is disabled, please use the {% code %} tag instead."
-			),
+			transform: () => {
+				throw new Error(
+					"This is disabled, please use the {% code %} tag instead."
+				);
+			},
 		},
 	},
 	tags: {
@@ -43,8 +47,8 @@ function headingTransform(node: Node, config: Config) {
 	);
 }
 
-function disableTransform(error: string) {
-	return function () {
-		throw new Error(error);
-	};
+function codeTransform(node: Node, config: Config) {
+	return new Tag("inline-code-astro", node.transformAttributes(config), [
+		node.attributes.content,
+	]);
 }

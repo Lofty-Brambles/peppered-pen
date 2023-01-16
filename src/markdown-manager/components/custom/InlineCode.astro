@@ -1,0 +1,27 @@
+---
+import { marker } from "@/utilities/generate-marker";
+
+export interface Props {
+	children: string[];
+}
+
+const { children } = Astro.props;
+
+const LANG_DETECTION = /(.+){:([a-z]+)}$/;
+const HTML_CONTENT =
+	/<pre class=".*" style="(.*)"><code><span class="line">(.*)<\/span><\/code><\/pre>/;
+
+const text = children.at(0)?.match(LANG_DETECTION);
+const props =
+	text === null || typeof text === "undefined"
+		? children.at(0) || ""
+		: [text[1]!, text[2]!];
+const blockCode =
+	typeof props === "string"
+		? marker.codeToHtml(props, {})
+		: marker.codeToHtml(props[0]!, { lang: props[1]! });
+
+const matchedContent = blockCode.match(HTML_CONTENT)!;
+---
+
+<code style={matchedContent[1]} set:html={matchedContent[2]} />

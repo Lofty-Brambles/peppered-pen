@@ -6,3 +6,65 @@ const allPosts = await readDir("content", schema);
 ---
 
 <Markdoc content={allPosts[0]?.tree!} components={defaultComponents} />
+
+<style lang="sass" is:global>
+	:root
+		--s-foreground: #24292f
+		--s-background: #ffffff
+		--s-highlight-bg: #eaeef280
+		--s-editor-line: #8c959f
+		--s-indent-bg: #24292f1f
+		--s-indent-bg-active: #24292f3d
+		--s-whitespace: #afb8c1
+		--s-highlight-border: #afb8c199
+		--s-bracket-bg: #54aeff40
+		--s-bracket-border: #54aeff99
+		--s-bracket-fg1: #0550ae
+		--s-bracket-fg2: #9a6700
+		--s-bracket-fg3: #b35900
+		--s-bracket-fg4: #8250df
+		--s-bracket-fg5: #57606a
+		--s-comment: #6e7781
+		--s-constant: #b35900
+		--s-entity: #0550ae
+		--s-export: #8a4600
+		--s-params: #24292f
+		--s-json-props: #0550ae
+		--s-string: #0a3069
+		--s-invalid: #6f3800
+		--s-carriage: #f6f8fa
+		--s-deleted: #fff5e8
+		--s-inserted: #ddf4ff
+		--s-changed: #ffddb0
+		--s-ignored: #eaeef2
+
+	html.dark
+		--s-foreground: #c9d1d9
+		--s-background: #0d1117
+		--s-highlight-bg: #6e76811a
+		--s-editor-line: #6e7681
+		--s-indent-bg: #c9d1d91f
+		--s-indent-bg-active: #c9d1d93d
+		--s-whitespace: #484f58
+		--s-highlight-border: #6e768199
+		--s-bracket-bg: #58a6ff40
+		--s-bracket-border: #58a6ff99
+		--s-bracket-fg1: #79c0ff
+		--s-bracket-fg2: #e3b341
+		--s-bracket-fg3: #fdac54
+		--s-bracket-fg4: #d2a8ff
+		--s-bracket-fg5: #8b949e
+		--s-comment: #8b949e
+		--s-constant: #ec8e2c
+		--s-entity: #79c0ff
+		--s-export: #fdac54
+		--s-params: #c9d1d9
+		--s-json-props: #a5d6ff
+		--s-string: #a5d6ff
+		--s-invalid: #fdac54
+		--s-carriage: #f0f6fc
+		--s-deleted: #331c04
+		--s-inserted: #051d4d
+		--s-changed: #4e2906
+		--s-ignored: #161b22
+</style>
