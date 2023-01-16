@@ -23,11 +23,6 @@ if (
 The component must satisfy the convention:- { "name-(astro|svelte)": Component }`
 	);
 
-const customComponent = components.get((content as Tag).name);
-
-const nullishOrPrimitiveCheck = (node: RenderableTreeNodes) =>
-	node === null || typeof node !== "object";
-
 const escape = (text: string | number) => {
 	const META_TEST_REGEX = /[<>"&]/;
 	const META_CATCH_REGEX = /[<>"&]/g;
@@ -42,6 +37,14 @@ const escape = (text: string | number) => {
 		? `${text}`.replace(META_CATCH_REGEX, (ch) => REPLACEMENTS.get(ch)!)
 		: `${text}`;
 };
+
+const nullishOrPrimitiveCheck = (node: RenderableTreeNodes) =>
+	node === null || typeof node !== "object";
+
+const CustomComponent = components.get((content as Tag).name);
+const isComponent = CustomComponent === undefined;
+
+const isAstroComponent = (name: string) => name.includes("astro");
 ---
 
 {
@@ -51,7 +54,7 @@ const escape = (text: string | number) => {
 		<Fragment set:html={escape(content)} />
 	) : nullishOrPrimitiveCheck(content) || !Tag.isTag(content) ? (
 		<Fragment set:html={null} />
-	) : typeof customComponent === "undefined" ? (
+	) : isComponent ? (
 		<content.name {...content.attributes}>
 			{Array.isArray(content.children) && (
 				<Astro.self
@@ -60,11 +63,11 @@ const escape = (text: string | number) => {
 				/>
 			)}
 		</content.name>
-	) : content.name.includes("astro") ? (
-		<customComponent children={content.children} {...content.attributes} />
+	) : isAstroComponent(content.name) ? (
+		<CustomComponent children={content.children} {...content.attributes} />
 	) : (
 		<Snippet
-			element={customComponent}
+			element={CustomComponent}
 			children={content.children}
 			{...content.attributes}
 			client:visible

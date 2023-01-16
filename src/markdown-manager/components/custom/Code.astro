@@ -1,4 +1,5 @@
 ---
+import type { Tag } from "@markdoc/markdoc";
 import { marker, rangeParser } from "@/markdown-manager/plugins/code-snippets";
 
 export interface Props {
@@ -7,20 +8,24 @@ export interface Props {
 	mark: string;
 	add: string;
 	delete: string;
-	children: string[];
+	children: Tag[];
 }
 
 const { title, language: lang, mark, add, delete: del, children } = Astro.props;
 
 const lineOptions = new rangeParser().getLineOpts({ mark, add, del });
 
-const codeSnippet = marker.codeToHtml(children[0]!, { lang, lineOptions });
+const code = children[0]?.children
+	.map((element) => (element === " " ? "\n" : element))
+	.join("")!;
+
+const codeSnippet = marker.codeToHtml(code, { lang, lineOptions });
 ---
 
 <figure class="code-snippet">
 	<figcaption class="code-title">{title}</figcaption>
 	<Fragment set:html={codeSnippet} />
-	<button aria-label="copy" class="code-copy" data-copy={codeSnippet}>
+	<button aria-label="copy" class="code-copy" data-copy={code}>
 		<svg
 			aria-hidden="true"
 			height="16"

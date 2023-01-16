@@ -17,9 +17,9 @@ const attrErrors = {
 	} as ValidationError,
 };
 
-const stringCheck = (value: unknown) => {
-	const NUMBER_COLLECTION = /^{(?:\d+|\d+-\d+)(?:,(?:\d+|\d+-\d+))*}$/;
+const NUMBER_COLLECTION = /^{(?:\d+|\d+-\d+)(?:,(?:\d+|\d+-\d+))*}$/;
 
+const stringCheck = (value: unknown) => {
 	if (typeof value !== "string")
 		return [attrErrors.INVALID_PATTERN_COLLECTION];
 	if (!NUMBER_COLLECTION.test(value))
@@ -46,6 +46,7 @@ export class rangeParser {
 
 	public getLineOpts(ranges: Record<className, range>) {
 		Object.entries(ranges)
+			.filter((arg) => NUMBER_COLLECTION.test(arg[1]))
 			.flatMap((args) => this._rangePool(...args))
 			.forEach(this._handleLineOption);
 

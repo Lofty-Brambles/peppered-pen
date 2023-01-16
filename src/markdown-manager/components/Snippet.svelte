@@ -4,6 +4,4 @@
 	export let element: typeof SvelteComponent;
 </script>
 
-<svelte:component this={element} {...$$restProps}>
-	<slot />
-</svelte:component>
+<svelte:component this={element} {...$$restProps} />

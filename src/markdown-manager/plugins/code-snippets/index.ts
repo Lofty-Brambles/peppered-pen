@@ -6,7 +6,7 @@ export const code: Schema = {
 	selfClosing: false,
 	attributes: {
 		title: { type: String, render: false, required: true },
-		language: { type: String, default: "txt", render: "data-language" },
+		language: { type: String, default: "txt" },
 		mark: { type: CodelinePattern, render: false },
 		add: { type: CodelinePattern, render: false },
 		delete: { type: CodelinePattern, render: false },
