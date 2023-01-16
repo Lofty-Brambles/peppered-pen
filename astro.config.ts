@@ -7,6 +7,8 @@ import prefetch from "@astrojs/prefetch";
 import compress from "astro-compress";
 import sitemap from "@astrojs/sitemap";
 
+//@ts-check
+
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
