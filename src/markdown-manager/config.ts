@@ -2,6 +2,8 @@ import type { Node, Config, RenderableTreeNode } from "@markdoc/markdoc";
 import { Tag } from "@markdoc/markdoc";
 import { HeaderLevel, HeaderManager } from "./plugins/headings";
 import { code } from "./plugins/code-snippets";
+import { ReadingTimeManager } from "./plugins/reading-time";
+import { emoji } from "./plugins/accessible-emojis";
 
 export const config: Config = {
 	nodes: {
@@ -31,12 +33,16 @@ export const config: Config = {
 	tags: {
 		code,
 	},
+	variables: {
+		emoji,
+	},
 };
 
 export const rummageTree = async (tree: RenderableTreeNode) => {
 	const toc = HeaderManager.navigate(tree);
+	const readingTime = ReadingTimeManager.navigate(tree);
 
-	return { tree, toc };
+	return { tree, toc, readingTime };
 };
 
 function headingTransform(node: Node, config: Config) {

@@ -12,12 +12,14 @@ specifiers:
   cty: ^1.0.3
   dotenv: ^16.0.3
   fast-glob: ^3.2.12
+  gemoji: ^8.0.0
   github-slugger: ^2.0.0
   gray-matter: ^4.0.3
   husky: ^8.0.3
   prettier: ^2.8.1
   prettier-plugin-astro: ^0.7.2
   prettier-plugin-svelte: ^2.9.0
+  reading-time: ^1.5.0
   sass: ^1.57.1
   sharp: ^0.31.3
   shiki: ^0.12.1
@@ -37,8 +39,10 @@ dependencies:
   astro-compress: 1.1.24
   dotenv: 16.0.3
   fast-glob: 3.2.12
+  gemoji: 8.0.0
   github-slugger: 2.0.0
   gray-matter: 4.0.3
+  reading-time: 1.5.0
   sharp: 0.31.3
   shiki: 0.12.1
   svelte: 3.55.0
@@ -1895,6 +1899,10 @@ packages:
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
 
+  /gemoji/8.0.0:
+    resolution: {integrity: sha512-MNjL3CO4OIq07S3GV1KZ6Wedz+iNmdPBuqylZtMAimdaw7Zsvp2xbjEuiST53YQXp6SBMFC4aMje6epYm85lMQ==}
+    dev: false
+
   /gensync/1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -3395,6 +3403,10 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+
+  /reading-time/1.5.0:
+    resolution: {integrity: sha512-onYyVhBNr4CmAxFsKS7bz+uTLRakypIe4R+5A824vBSkQy/hB3fZepoVEf8OVAxzLvK+H/jm9TzpI3ETSm64Kg==}
+    dev: false
 
   /recast/0.20.5:
     resolution: {integrity: sha512-E5qICoPoNL4yU0H0NoBDntNB0Q5oMSNh9usFctYniLBluTthi3RsQVBXIJNbApOlvSwW/RGxIuokPcAc59J5fQ==}

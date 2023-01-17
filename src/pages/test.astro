@@ -2,10 +2,14 @@
 import { Markdoc, readDir, defaultComponents } from "@/markdown-manager";
 import { schema } from "$frontmatter";
 
+import Layout from "@/layouts/Layout.astro";
+
 const allPosts = await readDir("content", schema);
 ---
 
-<Markdoc content={allPosts[0]?.tree!} components={defaultComponents} />
+<Layout title="test">
+	<Markdoc content={allPosts[0]?.tree!} components={defaultComponents} />
+</Layout>
 
 <style lang="sass" is:global>
 	:root
