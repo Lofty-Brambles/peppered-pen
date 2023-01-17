@@ -30,6 +30,7 @@ class EnvVars {
 	public content: string;
 	public title: string;
 	public author: string;
+	public readSpeed: string;
 
 	constructor() {
 		this._port = this._getVars({ key: "PORT", fall: "3000" });
@@ -37,6 +38,7 @@ class EnvVars {
 		this.content = this._getVars({ key: "CONTENT_DIR", fall: "content" });
 		this.title = this._getVars({ key: "TITLE", fall: "🌶 | Peppered Pen!" });
 		this.author = this._getVars({ key: "AUTHOR", fall: "Lofty Brambles" });
+		this.readSpeed = this._getVars({ key: "READ_SPEED", fall: "150" });
 	}
 
 	public site(): string {
