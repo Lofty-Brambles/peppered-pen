@@ -1,0 +1,62 @@
+<script>
+	const menu = document.querySelector(".menu")!;
+	const menuHighlight = menu.querySelector(".highlight")! as HTMLDivElement;
+
+	menu.addEventListener("pointerenter", handleMenuPointerIn);
+	menu.addEventListener("pointerleave", handleMenuPointerLeave);
+	menu.addEventListener("pointermove", handleMenuPointerMove);
+
+	function handleMenuPointerIn(_e: Event) {
+		menuHighlight.dataset.show = "true";
+	}
+	function handleMenuPointerLeave() {
+		menuHighlight.dataset.show = "false";
+	}
+	function handleMenuPointerMove(e: Event) {
+		if (e.target?.tagName !== "A") return;
+		const { x: menuL, y: menuT } = menu.getBoundingClientRect();
+		const {
+			width: itemW,
+			height: itemH,
+			x: itemL,
+			y: itemT,
+		} = e.target.getBoundingClientRect();
+		menuHighlight.style.width = itemW + "px";
+		menuHighlight.style.height = itemH + "px";
+		menuHighlight.style.left = itemL - menuL + "px";
+		menuHighlight.style.top = itemT - menuT + "px";
+	}
+</script>
+
+<nav>
+	<ul class="menu">
+		<div class="highlight"></div>
+		<li><a href="#">Home</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Services</a></li>
+		<li><a href="#">Portfolio</a></li>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</nav>
+
+<style>
+	.menu {
+		display: flex;
+		gap: 0.5rem;
+		list-style: none;
+		position: relative;
+		margin: 0;
+		padding: 0;
+	}
+	.menu > .highlight[data-show="true"] {
+		opacity: 1;
+	}
+	.menu > .highlight {
+		opacity: 0;
+		position: absolute;
+		background-color: red;
+		z-index: -1;
+		transition: all 125ms ease;
+	}
+</style>

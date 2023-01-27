@@ -1,5 +1,5 @@
 {
-    "include": ["**/*.ts", "**/*.astro", "**/*.svelte"],
+    "include": ["**/*.ts", "**/*.astro", "**/*.svelte", "svelte.config.js"],
     "extends": "astro/tsconfigs/strictest",
     "compilerOptions": {
         "types": ["@astrojs/image/client"],

@@ -1,0 +1,26 @@
+@use "sass:math"
+
+$breakpoints: ( sm: 385px, smx: 500px, md: 670px, lg: 992px, xl: 1400px )
+=mq($name, $type: min)
+	$min: map-get($map: v.$breakpoints, $key: $name)
+
+	@if $min
+		@media (#{$type}-width: $min)
+			@content
+
+	@else
+		@content
+
+=flex($dir: row, $jc: center, $ai: center, $wrp: nowrap, $g: false)
+	display: flex
+	flex-flow: $dir $wrp
+	justify-content: $jc
+	align-items: $ai
+
+	@if $g
+		gap: $g
+
+=box($width, $height: $width)
+	box-sizing: border-box
+	width: $width
+	height: $height

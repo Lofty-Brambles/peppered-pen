@@ -1,0 +1,160 @@
+---
+import SEO from "@/components/astro/SEO.astro";
+import LinkTags from "@/components/astro/LinkTags.astro";
+
+export interface Props {
+	title: string;
+	description: string;
+	tags: string[];
+	image: {
+		url: string;
+		alt: string;
+	};
+	time: {
+		published: Date;
+		updated: Date;
+	};
+}
+
+const { title, description, tags, image, time } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<SEO
+			title={title}
+			description={description}
+			tags={tags}
+			image={image}
+			time={time}
+		/>
+		<LinkTags />
+		<title>{title}</title>
+		<slot name="head-attributes" />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style lang="sass" is:global>
+	@font-face
+		font-family: "Atkins"
+		src: url("./brailleFd.woff2"), local("Arial")
+
+
+	:root
+		--rose-1: #ffe4e6
+		--rose-2: #fecdd3
+		--rose-3: #fda4af
+		--rose-4: #fb7185
+		--rose-5: #f43f5e
+		--rose-6: #e11d48
+		--rose-7: #be123c
+		--rose-8: #9f1239
+		--rose-9: #881337
+
+		--purple-1: #f3e8ff
+		--purple-2: #e9d5ff
+		--purple-3: #d8b4fe
+		--purple-4: #c084fc
+		--purple-5: #a855f7
+		--purple-6: #9333ea
+		--purple-7: #7e22ce
+		--purple-8: #6b21a8
+		--purple-9: #581c87
+
+		--blue-1: #dbeafe
+		--blue-2: #bfdbfe
+		--blue-3: #93c5fd
+		--blue-4: #60a5fa
+		--blue-5: #3b82f6
+		--blue-6: #2563eb
+		--blue-7: #1d4ed8
+		--blue-8: #1e40af
+		--blue-9: #1e3a8a
+
+		--cyan-1: #cffafe
+		--cyan-2: #cffafe
+		--cyan-3: #67e8f9
+		--cyan-4: #22d3ee
+		--cyan-5: #06b6d4
+		--cyan-6: #0891b2
+		--cyan-7: #0e7490
+		--cyan-8: #155e75
+		--cyan-9: #164e63
+
+		--emerald-1: #d1fae5
+		--emerald-2: #a7f3d0
+		--emerald-3: #6ee7b7
+		--emerald-4: #34d399
+		--emerald-5: #10b981
+		--emerald-6: #059669
+		--emerald-7: #047857
+		--emerald-8: #065f46
+		--emerald-9: #064e3b
+
+		--green-1: #dcfce7
+		--green-2: #bbf7d0
+		--green-3: #86efac
+		--green-4: #4ade80
+		--green-5: #22c55e
+		--green-6: #16a34a
+		--green-7: #15803d
+		--green-8: #166534
+		--green-9: #14532d
+
+		--gray-1: #f3f4f6
+		--gray-2: #e5e7eb
+		--gray-3: #d1d5db
+		--gray-4: #9ca3af
+		--gray-5: #6b7280
+		--gray-6: #52525b
+		--gray-7: #3f3f46
+		--gray-75: #334155
+		--gray-8: #27272a
+		--gray-85: #1e293b
+		--gray-9: #18181b
+		--gray-95: #0f172a
+
+		--ff-monospace: Menlo, "IBM Plex Mono", Menlo, monospace
+		--ff-base: "Atkins", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif
+
+		--base: var(--gray-9)
+		--btn-hover: var(--gray-1)
+
+	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
+		margin: 0
+		padding: 0
+		border: 0
+		font-size: 100%
+		font: inherit
+		vertical-align: baseline
+
+	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section
+		display: block
+
+	body
+		line-height: 1
+		// padding
+		background-color: #0ff
+		display: flex
+		flex-direction: column
+		padding: 1rem
+
+	ol, ul
+		list-style: none
+
+	blockquote, q 
+		quotes: none
+
+	blockquote:before, blockquote:after, q:before, q:after
+		content: ""
+		content: none
+
+	table
+		border-collapse: collapse
+		border-spacing: 0
+
+	
+</style>
